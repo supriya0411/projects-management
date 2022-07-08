@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import logo from "../images/logo.png";
 import styled from "styled-components";
 
 const NavStyle = styled.nav`
@@ -10,7 +11,7 @@ const NavStyle = styled.nav`
   }
   @media (min-width: 700px) {
     position: fixed;
-    width: 200px;
+    width: 250px;
     height: 100%;
     overflow-y: scroll;
   }
@@ -20,6 +21,7 @@ const NavListStyle = styled.ul`
   padding: 0;
   list-style: none;
   line-height: 2;
+  margin-top: 20px;
   a {
     text-decoration: none;
     font-weight: bold;
@@ -38,9 +40,10 @@ const NavListStyle = styled.ul`
 const LeftNav = () => {
   return (
     <NavStyle>
+      <img src={logo} alt="Logo" className="w-100" />
       <NavListStyle>
         <li>
-          <Link to="/">Projects</Link>
+          <Link to="/projects">Projects</Link>
         </li>
         <li>
           <Link to="/epics">Epics</Link>
