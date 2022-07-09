@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button } from "react-bootstrap";
 
-const Epics = ({ project, epics, setProjectEpics, updateProject }) => {
+const ProjectEpics = ({ project, epics, setProjectEpics, updateProject }) => {
   const handleEpicChange = (changedEpic) => {
     setProjectEpics((epics) =>
       epics.map((obj) => {
@@ -81,7 +81,7 @@ const ProjectWithEpics = ({ project, updateProject }) => {
           Add Epic
         </Button>
       </div>
-      <Epics
+      <ProjectEpics
         project={project}
         epics={projectEpics}
         setProjectEpics={setProjectEpics}

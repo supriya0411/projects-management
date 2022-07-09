@@ -16,15 +16,31 @@ const Projects = () => {
     setOpenPopup(false);
   };
 
+  // Local Storage save
+  const localStorageSave = (projects) => {
+    localStorage.setItem("allProjects", JSON.stringify(projects));
+  };
+
+  // Local Storage read
+  const localStorageGet = () => {
+    return JSON.parse(localStorage.getItem("allProjects"));
+  };
+
   const addProject = (newProject) => {
     newProject.Id = allProjects.length + 1;
     const projects = [...allProjects, newProject];
     setAllProjects(projects);
-    localStorage.setItem("allProjects", JSON.stringify(projects));
+    localStorageSave(projects);
+  };
+
+  const deleteProject = (projectId) => {
+    const projects = allProjects.filter((item) => item.Id !== projectId);
+    setAllProjects(projects);
+    localStorageSave(projects);
   };
 
   useEffect(() => {
-    const projects = JSON.parse(localStorage.getItem("allProjects"));
+    const projects = localStorageGet();
     if (projects) {
       setAllProjects(projects);
     }
@@ -47,7 +63,9 @@ const Projects = () => {
           openPopup={openPopup}
         />
       )}
-      {allProjects && <ProjectList allProjects={allProjects} />}
+      {allProjects && (
+        <ProjectList allProjects={allProjects} deleteProject={deleteProject} />
+      )}
     </Layout>
   );
 };

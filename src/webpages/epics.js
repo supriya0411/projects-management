@@ -10,9 +10,19 @@ const Epics = () => {
 
   const [allProjects, setAllProjects] = useState([]);
 
+  // Local Storage save
+  const localStorageSave = (projects) => {
+    localStorage.setItem("allProjects", JSON.stringify(projects));
+  };
+
+  // Local Storage read
+  const localStorageGet = () => {
+    return JSON.parse(localStorage.getItem("allProjects"));
+  };
+
   const saveAllProjects = () => {
     setAllProjects(allProjects);
-    localStorage.setItem("allProjects", JSON.stringify(allProjects));
+    localStorageSave(allProjects);
   };
 
   const updateProject = (updatedProject) => {
@@ -27,13 +37,12 @@ const Epics = () => {
   };
 
   useEffect(() => {
-    const projects = JSON.parse(localStorage.getItem("allProjects"));
+    const projects = localStorageGet();
     if (projects) {
       setAllProjects(projects);
     }
   }, []);
 
-  console.log("allProjects", allProjects);
   return (
     <Layout>
       <div className="d-flex justify-content-between">
