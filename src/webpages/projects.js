@@ -17,6 +17,7 @@ const Projects = () => {
   };
 
   const addProject = (newProject) => {
+    newProject.Id = allProjects.length + 1;
     const projects = [...allProjects, newProject];
     setAllProjects(projects);
     localStorage.setItem("allProjects", JSON.stringify(projects));
