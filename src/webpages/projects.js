@@ -17,8 +17,17 @@ const Projects = () => {
   };
 
   const addProject = (newProject) => {
-    setAllProjects([...allProjects, newProject]);
+    const projects = [...allProjects, newProject];
+    setAllProjects(projects);
+    localStorage.setItem("allProjects", JSON.stringify(projects));
   };
+
+  useEffect(() => {
+    const projects = JSON.parse(localStorage.getItem("allProjects"));
+    if (projects) {
+      setAllProjects(projects);
+    }
+  }, []);
 
   return (
     <Layout>
