@@ -57,8 +57,12 @@ const Epics = () => {
           Save All Details
         </Button>
       </div>
-      {allProjects.map((project) => (
-        <ProjectWithEpics project={project} updateProject={updateProject} />
+      {allProjects.map((project, index) => (
+        <ProjectWithEpics
+          project={project}
+          updateProject={updateProject}
+          key={`project-epic-${index}`}
+        />
       ))}
     </Layout>
   );

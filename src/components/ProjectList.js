@@ -1,5 +1,5 @@
 import React from "react";
-import { Button } from "react-bootstrap";
+import { DeleteCross } from "../components/icons/Icons";
 
 const ProjectList = ({ allProjects, deleteProject }) => {
   return (
@@ -9,7 +9,9 @@ const ProjectList = ({ allProjects, deleteProject }) => {
           <th scope="col">Title</th>
           <th scope="col">Start Date</th>
           <th scope="col">End Date</th>
-          <th scope="col">Delete</th>
+          <th scope="col" className="text-center">
+            Delete
+          </th>
         </tr>
       </thead>
       <tbody>
@@ -19,12 +21,12 @@ const ProjectList = ({ allProjects, deleteProject }) => {
             <td>{project.StartDate}</td>
             <td>{project.EndDate}</td>
             <td>
-              <Button
-                variant="primary"
+              <div
+                className="text-center"
                 onClick={() => deleteProject(project.Id)}
               >
-                Delete
-              </Button>
+                <DeleteCross />
+              </div>
             </td>
           </tr>
         ))}

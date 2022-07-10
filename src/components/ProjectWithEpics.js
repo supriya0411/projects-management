@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { Button } from "react-bootstrap";
+import { DeleteIcon } from "../components/icons/Icons";
+import InputContainer from "../components/InputContainer";
 
 const ProjectEpics = ({ project, epics, setProjectEpics, updateProject }) => {
   const handleEpicChange = (changedEpic) => {
@@ -14,41 +16,51 @@ const ProjectEpics = ({ project, epics, setProjectEpics, updateProject }) => {
     updateProject({ ...project, epics: epics });
   };
 
+  const handleEpicDelete = (epicId) => {
+    const projectEpics = epics.filter((item) => item.Id !== epicId);
+    setProjectEpics(projectEpics);
+    updateProject({ ...project, epics: projectEpics });
+  };
+
   return (
     <div className="py-4">
       {epics.map((epic, index) => {
         return (
           <div className="d-flex flex-col gap-4 py-2" key={`epic-${index}`}>
-            <input
-              type="text"
-              name="Name"
-              maxLength="100"
-              required
-              value={epic.Name}
-              onChange={(e) =>
-                handleEpicChange({ ...epic, Name: e.target.value })
-              }
-            />
-            <select
-              value={epic.Priority}
-              selected={epic.Priority}
-              onChange={(e) =>
-                handleEpicChange({ ...epic, Priority: e.target.value })
-              }
-            >
-              <option value="">Select Priority</option>
-              <option value="High">High</option>
-              <option value="Low">Low</option>
-              <option value="Medium">Medium</option>
-            </select>
-            <Button
-              variant="danger"
-              onClick={() => {
-                // setEpicCount(epicCount + 1);
-              }}
-            >
-              Delete
-            </Button>
+            <InputContainer>
+              <input
+                type="text"
+                name="Name"
+                maxLength="100"
+                required
+                value={epic.Name}
+                onChange={(e) =>
+                  handleEpicChange({ ...epic, Name: e.target.value })
+                }
+              />
+              {epic.Name === "" && (
+                <span className="text-danger">{"Cannot be empty"}</span>
+              )}
+            </InputContainer>
+            <InputContainer>
+              <select
+                value={epic.Priority}
+                selected={epic.Priority}
+                onChange={(e) =>
+                  handleEpicChange({ ...epic, Priority: e.target.value })
+                }
+              >
+                <option value="">Select Priority</option>
+                <option value="High">High</option>
+                <option value="Low">Low</option>
+                <option value="Medium">Medium</option>
+              </select>
+            </InputContainer>
+            <InputContainer>
+              <div className="m-1" onClick={() => handleEpicDelete(epic.Id)}>
+                <DeleteIcon />
+              </div>
+            </InputContainer>
           </div>
         );
       })}
