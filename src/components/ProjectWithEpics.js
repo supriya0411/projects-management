@@ -3,28 +3,32 @@ import { Button } from "react-bootstrap";
 import { DeleteIcon } from "../components/icons/Icons";
 import InputContainer from "../components/InputContainer";
 
-const ProjectEpics = ({ project, epics, setProjectEpics, updateProject }) => {
+const ProjectEpics = ({
+  project,
+  projectEpics,
+  setProjectEpics,
+  updateProject,
+}) => {
   const handleEpicChange = (changedEpic) => {
-    setProjectEpics((epics) =>
-      epics.map((obj) => {
-        if (obj.Id === changedEpic.Id) {
-          return changedEpic;
-        }
-        return obj;
-      })
-    );
-    updateProject({ ...project, epics: epics });
+    const allEpics = projectEpics.map((obj) => {
+      if (obj.Id === changedEpic.Id) {
+        return changedEpic;
+      }
+      return obj;
+    });
+    setProjectEpics(allEpics);
+    updateProject({ ...project, epics: allEpics });
   };
 
   const handleEpicDelete = (epicId) => {
-    const projectEpics = epics.filter((item) => item.Id !== epicId);
-    setProjectEpics(projectEpics);
-    updateProject({ ...project, epics: projectEpics });
+    const allProjectEpics = projectEpics.filter((item) => item.Id !== epicId);
+    setProjectEpics(allProjectEpics);
+    updateProject({ ...project, epics: allProjectEpics });
   };
 
   return (
     <div className="py-4">
-      {epics.map((epic, index) => {
+      {projectEpics.map((epic, index) => {
         return (
           <div className="d-flex flex-col gap-4 py-2" key={`epic-${index}`}>
             <InputContainer>
@@ -95,7 +99,7 @@ const ProjectWithEpics = ({ project, updateProject }) => {
       </div>
       <ProjectEpics
         project={project}
-        epics={projectEpics}
+        projectEpics={projectEpics}
         setProjectEpics={setProjectEpics}
         updateProject={updateProject}
       />
