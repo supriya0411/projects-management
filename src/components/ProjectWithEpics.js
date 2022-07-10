@@ -8,6 +8,7 @@ const ProjectEpics = ({
   projectEpics,
   setProjectEpics,
   updateProject,
+  setSaveDisabled,
 }) => {
   const handleEpicChange = (changedEpic) => {
     const allEpics = projectEpics.map((obj) => {
@@ -18,6 +19,7 @@ const ProjectEpics = ({
     });
     setProjectEpics(allEpics);
     updateProject({ ...project, epics: allEpics });
+    setSaveDisabled(false);
   };
 
   const handleEpicDelete = (epicId) => {
@@ -30,7 +32,7 @@ const ProjectEpics = ({
     <div className="py-4">
       {projectEpics.map((epic, index) => {
         return (
-          <div className="d-flex flex-col gap-4 py-2" key={`epic-${index}`}>
+          <div className="d-flex flex-col gap-4" key={`epic-${index}`}>
             <InputContainer>
               <input
                 type="text"
@@ -72,11 +74,10 @@ const ProjectEpics = ({
   );
 };
 
-const ProjectWithEpics = ({ project, updateProject }) => {
+const ProjectWithEpics = ({ project, updateProject, setSaveDisabled }) => {
   const [projectEpics, setProjectEpics] = useState(project.epics || []);
 
   const addEpic = () => {
-    console.log("Add Epic", project.epics);
     setProjectEpics([
       ...projectEpics,
       { Name: "", Priority: "", Id: Math.random().toString(16).slice(2) },
@@ -86,9 +87,9 @@ const ProjectWithEpics = ({ project, updateProject }) => {
   return (
     <div className="m-4">
       <div className="d-flex flex-row">
-        <h1>{project.Title}</h1>
+        <h2>{project.Title}</h2>
         <Button
-          className="m-2"
+          className="m-2 mx-5"
           variant="primary"
           onClick={() => {
             addEpic();
@@ -102,6 +103,7 @@ const ProjectWithEpics = ({ project, updateProject }) => {
         projectEpics={projectEpics}
         setProjectEpics={setProjectEpics}
         updateProject={updateProject}
+        setSaveDisabled={setSaveDisabled}
       />
       <hr />
     </div>

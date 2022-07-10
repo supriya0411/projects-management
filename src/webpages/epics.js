@@ -9,6 +9,7 @@ const Epics = () => {
   });
 
   const [allProjects, setAllProjects] = useState([]);
+  const [saveDisabled, setSaveDisabled] = useState(true);
 
   // Local Storage save
   const localStorageSave = (projects) => {
@@ -23,6 +24,7 @@ const Epics = () => {
   const saveAllProjects = () => {
     setAllProjects(allProjects);
     localStorageSave(allProjects);
+    setSaveDisabled(true);
   };
 
   const updateProject = (updatedProject) => {
@@ -35,6 +37,18 @@ const Epics = () => {
       })
     );
   };
+
+  // Validate Epics name not empty and disable save all project button
+  useEffect(() => {
+    allProjects.forEach((project) => {
+      project.epics &&
+        project.epics.forEach((epic) => {
+          if (epic.Name === "") {
+            setSaveDisabled(true);
+          }
+        });
+    });
+  }, [allProjects]);
 
   useEffect(() => {
     const projects = localStorageGet();
@@ -50,6 +64,7 @@ const Epics = () => {
         <Button
           className="m-4"
           variant="primary"
+          disabled={saveDisabled}
           onClick={() => {
             saveAllProjects();
           }}
@@ -61,6 +76,7 @@ const Epics = () => {
         <ProjectWithEpics
           project={project}
           updateProject={updateProject}
+          setSaveDisabled={setSaveDisabled}
           key={`project-epic-${index}`}
         />
       ))}
