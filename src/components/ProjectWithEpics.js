@@ -26,6 +26,7 @@ const ProjectEpics = ({
     const allProjectEpics = projectEpics.filter((item) => item.Id !== epicId);
     setProjectEpics(allProjectEpics);
     updateProject({ ...project, epics: allProjectEpics });
+    setSaveDisabled(false);
   };
 
   return (
